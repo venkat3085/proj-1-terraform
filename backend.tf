@@ -1,3 +1,14 @@
+# Configure Terraform to use S3 backend
+terraform {
+  backend "s3" {
+    bucket         = "ml-infra-terraform-state-075a57e0"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "ml-infra-terraform-locks"
+    encrypt        = true
+  }
+}
+
 # S3 bucket for Terraform state
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "${var.project_name}-terraform-state-${random_id.bucket_suffix.hex}"
